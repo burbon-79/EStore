@@ -1,3 +1,3 @@
 # EStore
 
-Design elements by [Rozetka](rozetka.com.ua) and [Prom](prom.ua).
+Design elements by [Rozetka](https://rozetka.com.ua) and [Prom](https://prom.ua).
