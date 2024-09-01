@@ -1,0 +1,442 @@
+body{
+    background-color: #cda2db7a;
+}
+
+table,
+td {
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.column{
+    display: flex;
+    flex-direction: column;
+}
+
+.center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.httpError{
+    font-size: 48px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.httpError-text{
+    text-align: center;
+}
+
+.httpError-link{
+    margin-top: 25px;
+}
+
+.error{
+    display: flex;
+    color: red;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.header{
+    display: flex;
+    background-color: #CDA2DB;
+    padding: auto;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat';
+    position: sticky;
+    top: 0px;
+}
+
+.header_name{
+    margin: 25px 90px 25px 50px;
+    font-size: 50px;
+}
+
+.header_name-link{
+    text-decoration: none;
+    color: black;
+}
+
+.header_search-input{
+    font-size: 24px;
+    width: 800px;
+}
+
+.header_search-button{
+    font-size: 24px;
+}
+
+.header_buttons{
+    display: flex;
+}
+
+.header_button{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    /* background-color: #098100; */
+    border-radius: 15px;
+    margin-left: 50px;
+    text-decoration: none;
+    color: black;
+}
+
+.main{
+    font-family: 'Montserrat';
+    display: flex;
+}
+
+.main-upper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.main-lower{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.main-lower-input{
+    align-items: center;
+}
+
+.sidebar{
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+    margin-left: 25px;
+}
+
+.sidebar_name{
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.sidebar_item{
+    margin-bottom: 10px;
+}
+
+.content{
+    margin-top: 25px;
+    margin-left: 15px;
+}
+
+.content_section{
+    font-size: 36px;
+    font-weight: bold;
+    margin-left: 25px;
+}
+
+.content_add-new{
+    display: flex;
+    justify-content: center;
+    margin: 10px 40px;
+    padding: 15px;
+    border: solid;
+    width: 200px;
+    border-radius: 15px;
+    font-size: 24px;
+    border: solid;
+}
+
+.content_list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.content_list-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    margin: 10px 25px;
+    padding: 10px;
+    border: solid;
+}
+
+.content_list-item-name, .content_list-item-price{
+    font-size: 24px;
+    margin-top: 10px;
+}
+
+.content_list-text{
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.content_about, .content_reviews{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.content_review{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.content_about-name, .content_reviews-name{
+    font-weight: bold;
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.content_about-text, .content_reviews-text{
+    font-size: 24px;
+}
+
+.content_reviews-user{
+    font-weight: bold;
+    font-size: 28px;
+}
+
+.content_reviews-stars{
+    display: flex;
+    align-items: center;
+}
+
+.content_reviews-stars-amount{
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.entry{
+    flex-direction: column;
+    align-items: center;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.entry-text{
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.entry-form{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    font-size: 24px;
+}
+
+.entry-form_details{
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.entry-form_details-radio{
+    display: flex;
+    flex-direction: column;
+}
+
+.info-left, .info-right{
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+    align-items: center;
+}
+
+.info-right{
+    margin-left: 400px;
+}
+
+.product-name{
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.product-name-input{
+    width: 400px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.product-price{
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.product-price-input{
+    width: 200px;
+    text-align: center;
+}
+
+.product-buy{
+    font-size: 36px;
+    margin-bottom: 20px;
+    width: 300px;
+    height: 70px;
+}
+
+.product-seller{
+    font-size: 24px;
+}
+
+.product-description, .product-reviews{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px;
+}
+
+.product-reviews-item{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 25px;
+}
+
+.product-description-input{
+    align-items: center;
+}
+
+.product-description-name, .product-reviews-name{
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.product-description-text, .product-reviews-text, .content_reviews-text{
+    font-size: 24px;
+}
+
+.product-reviews-input, .content_reviews-input{
+    font-size: 24px;
+    width: 200px;
+}
+
+.product-category-select{
+    margin-bottom: 25px;
+}
+
+.product-reviews{
+    display: flex;
+    flex-direction: column;
+}
+
+.product-reviews-user{
+    font-weight: bold;
+    font-size: 28px;
+}
+
+.product-reviews-user-input, .content_reviews-user-input{
+    width: 160px;
+}
+
+.product-reviews-stars{
+    display: flex;
+    align-items: center;
+}
+
+.product-reviews-stars-amount{
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.product-reviews-stars-amount-input, .content_reviews-stars-amount-input{
+    width: 15px;
+}
+
+.product-save{
+    height: 100px;
+    width: 300px;
+    font-size: 48px;
+}
+
+.edit-store{
+    flex-direction: column;
+    align-items: center;
+}
+
+.edit-store-profile{
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.store_profile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 25px;
+}
+
+.store_profile-image{
+    border-radius: 100%;
+    margin-bottom: 15px;
+}
+
+.store_profile-name{
+    text-align: center;
+    font-size: 48px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.store_buttons{
+    display: flex;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.store_buttons-button{
+    display: flex;
+    justify-content: center;
+    margin: 15px;
+    padding: 15px;
+    border: solid;
+    width: 200px;
+    border-radius: 15px;
+}
+
+.order-text{
+    font-size: 24px;
+}
+
+.order-text-bold{
+    font-weight: bold;
+}
+
+.order-input{
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.order-basket{
+    margin-bottom: 10px;
+}
+
+.order-submit{
+    width: 500px;
+    height: 100px;
+    font-size: 36px;
+    margin: auto;
+}
+
+.footer{
+    display: flex;
+    background-color: #CDA2DB;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat';
+}
+
+.footer_text{
+    font-size: 18px;
+}

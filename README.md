@@ -1,2 +1,0 @@
-# EStore
-Simple online store
