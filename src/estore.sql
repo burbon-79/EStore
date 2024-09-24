@@ -51,7 +51,7 @@ DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
-  `photo` varchar(999) DEFAULT 'images/no-image.jpg',
+  `photo` longblob,
   `price` double NOT NULL,
   `seller_id` int NOT NULL,
   `description` varchar(999) DEFAULT NULL,
@@ -110,7 +110,7 @@ CREATE TABLE `seller` (
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `store_name` varchar(100) NOT NULL DEFAULT 'New store',
-  `photo` varchar(100) NOT NULL DEFAULT 'images/no-image.jpg',
+  `photo` longblob,
   `about` varchar(999) DEFAULT 'No information available',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
@@ -136,4 +136,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-01 14:25:01
+-- Dump completed on 2024-09-24 23:44:54

@@ -4,7 +4,7 @@ public class SellerEntity {
     private int id;
     private String email;
     private String storeName;
-    private String photo;
+    private byte[] photo;
     private String about;
 
     public int getId() {
@@ -31,11 +31,11 @@ public class SellerEntity {
         this.storeName = storeName;
     }
 
-    public String getPhoto() {
+    public byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 

@@ -3,7 +3,7 @@ package com.estore.repository.entity;
 public class ProductEntity {
     private int id;
     private String name;
-    private String photo;
+    private byte[] photo;
     private double price;
     private int sellerId;
     private String description;
@@ -25,11 +25,11 @@ public class ProductEntity {
         this.name = name;
     }
 
-    public String getPhoto() {
+    public byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 

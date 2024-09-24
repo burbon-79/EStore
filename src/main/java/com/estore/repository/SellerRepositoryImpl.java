@@ -10,6 +10,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import java.io.InputStream;
+
 @Repository
 public class SellerRepositoryImpl implements SellerRepository{
     @Autowired
@@ -45,16 +47,22 @@ public class SellerRepositoryImpl implements SellerRepository{
         return jdbcOperations.queryForObject(sql, namedParameters, String.class);
     }
 
+    public byte[] getStorePhotoById(int id){
+        String sql = "SELECT photo FROM seller WHERE id = :id;";
+        SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("id", id);
+        return jdbcOperations.queryForObject(sql, namedParameters, byte[].class);
+    }
+
     public SellerEntity getStoreById(int id){
         String sql = "SELECT id, email, store_name, photo, about FROM seller WHERE id = :id;";
         SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("id", id);
         return jdbcOperations.queryForObject(sql, namedParameters, new BeanPropertyRowMapper<>(SellerEntity.class));
     }
 
-    public void setPhotoToStore(int storeId, String linkToFile){
+    public void setPhotoToStore(int storeId, InputStream photoIS){
         String sql = "UPDATE seller SET photo = :photo WHERE id = :id;";
         SqlParameterSource namedParameters = new MapSqlParameterSource()
-                .addValue("photo", linkToFile)
+                .addValue("photo", photoIS)
                 .addValue("id", storeId);
         jdbcOperations.update(sql, namedParameters);
     }

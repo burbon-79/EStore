@@ -2,7 +2,6 @@ package com.estore.controller;
 
 import com.estore.repository.SellerRepository;
 import com.estore.repository.entity.SellerEntity;
-import com.estore.service.PhotoService;
 import jakarta.validation.Valid;
 import com.estore.dto.ReviewDTO;
 import com.estore.dto.SellerDTO;
@@ -33,15 +32,13 @@ public class SellerController {
     private SellerRepository sellerRepository;
     private ReviewRepository reviewRepository;
     private ProductRepository productRepository;
-    private PhotoService photoService;
 
     @Autowired
-    public SellerController(PasswordEncoder passwordEncoder, SellerRepository sellerRepository, ReviewRepository reviewRepository, ProductRepository productRepository, PhotoService photoService) {
+    public SellerController(PasswordEncoder passwordEncoder, SellerRepository sellerRepository, ReviewRepository reviewRepository, ProductRepository productRepository) {
         this.passwordEncoder = passwordEncoder;
         this.sellerRepository = sellerRepository;
         this.reviewRepository = reviewRepository;
         this.productRepository = productRepository;
-        this.photoService = photoService;
     }
 
     @GetMapping("/login")
@@ -115,8 +112,7 @@ public class SellerController {
         }
 
         if(photo!=null && photo.getSize()>0) {
-            String linkToPhoto = photoService.savePhoto(sellerId, "store", photo);
-            sellerRepository.setPhotoToStore(sellerId, linkToPhoto);
+            sellerRepository.setPhotoToStore(sellerId, photo.getInputStream());
         }
 
         sellerRepository.setStoreName(sellerId, name);

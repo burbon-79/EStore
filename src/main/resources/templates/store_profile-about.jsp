@@ -16,7 +16,7 @@
         <main>
             <div class="main column">
                 <div class="store_profile">
-                    <img src="${store.photo}" alt="An error occurred while loading an image" width="200px" class="store_profile-image">
+                    <img src="${pageContext.request.contextPath}/store/image-${store.id}" alt="An error occurred while loading an image" width="200px" class="store_profile-image">
                     <c:choose>
                         <c:when test="${pageContext.request.userPrincipal.name == store.email}">
                             <form method="post" action="changeStoreNameAndPhoto" enctype="multipart/form-data" class="column center">

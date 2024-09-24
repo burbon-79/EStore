@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,10 +32,10 @@ public class ProductRepositoryImpl implements ProductRepository{
         return jdbcOperations.queryForObject("SELECT LAST_INSERT_ID();", new HashMap<>(), Integer.class);
     }
 
-    public void setPhotoToProduct(int productId, String linkToFile){
+    public void setPhotoToProduct(int productId, InputStream photoIS){
         String sql = "UPDATE products SET photo = :photo WHERE id = :id;";
         SqlParameterSource namedParameters = new MapSqlParameterSource()
-                .addValue("photo", linkToFile)
+                .addValue("photo", photoIS)
                 .addValue("id", productId);
         jdbcOperations.update(sql, namedParameters);
     }
@@ -66,5 +67,11 @@ public class ProductRepositoryImpl implements ProductRepository{
         String sql = "SELECT * FROM products WHERE name LIKE :pattern";
         SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("pattern", '%' + stringPattern + '%');
         return jdbcOperations.queryForList(sql, namedParameters);
+    }
+
+    public byte[] getProductPhotoById(int productId){
+        String sql = "SELECT photo FROM products WHERE id = :id;";
+        SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("id", productId);
+        return jdbcOperations.queryForObject(sql, namedParameters, byte[].class);
     }
 }

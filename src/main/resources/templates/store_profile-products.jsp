@@ -15,7 +15,7 @@
         <main>
             <div class="main column">
                 <div class="store_profile">
-                    <img src="${store.photo}" alt="An error occurred while loading an image" width="200px" class="store_profile-image">
+                    <img src="${pageContext.request.contextPath}/store/image-${store.id}" alt="An error occurred while loading an image" width="200px" class="store_profile-image">
                     <c:choose>
                         <c:when test="${pageContext.request.userPrincipal.name == store.email}">
                             <form method="post" action="changeStoreNameAndPhoto" enctype="multipart/form-data" class="column center">
@@ -48,7 +48,7 @@
                                 <c:forEach items="${products}" var="thisProduct">
                                     <div>
                                         <a href="product-${thisProduct.id}" class="content_list-item">
-                                            <img src="${thisProduct.photo}" alt="Product photo" width="240px">
+                                            <img src="${pageContext.request.contextPath}/product/image-${thisProduct.id}" alt="Product photo" width="240px">
                                             <span class="content_list-item-name">${thisProduct.name}</span>
                                             <span class="content_list-item-price">${thisProduct.price}$</span>
                                         </a>

@@ -18,7 +18,7 @@
                 <div class="main-upper">
                     <div class="info-left">
                         <span class="product-name">${product.name}</span>
-                        <img src="${product.photo}" alt="An error occurred while loading an image" width="400px">
+                        <img src="${pageContext.request.contextPath}/product/image-${product.id}" alt="An error occurred while loading an image" width="400px">
                     </div>
                     <div class="info-right">
                         <span class="product-price">${product.price}$</span>

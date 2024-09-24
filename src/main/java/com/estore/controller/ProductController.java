@@ -3,7 +3,6 @@ package com.estore.controller;
 import com.estore.dto.ReviewDTO;
 import com.estore.repository.SellerRepository;
 import com.estore.repository.entity.ProductEntity;
-import com.estore.service.PhotoService;
 import jakarta.validation.Valid;
 import com.estore.dto.ProductDTO;
 import com.estore.repository.ProductRepository;
@@ -27,14 +26,12 @@ public class ProductController {
     private ProductRepository productRepository;
     private SellerRepository sellerRepository;
     private ReviewRepository reviewRepository;
-    private PhotoService photoService;
 
     @Autowired
-    public ProductController(ProductRepository productRepository, SellerRepository sellerRepository, ReviewRepository reviewRepository, PhotoService photoService) {
+    public ProductController(ProductRepository productRepository, SellerRepository sellerRepository, ReviewRepository reviewRepository) {
         this.productRepository = productRepository;
         this.sellerRepository = sellerRepository;
         this.reviewRepository = reviewRepository;
-        this.photoService = photoService;
     }
 
     @GetMapping("addProduct")
@@ -58,8 +55,7 @@ public class ProductController {
         int sellerId = sellerRepository.getIdByEmail(principal.getName());
         int newProductId = productRepository.addNewProduct(productDTO, sellerId);
         if(photo!=null && photo.getSize()>0) {
-            String linkToPhoto = photoService.savePhoto(newProductId, "product", photo);
-            productRepository.setPhotoToProduct(newProductId, linkToPhoto);
+            productRepository.setPhotoToProduct(newProductId, photo.getInputStream());
         }
 
         return "redirect:/store-"+ sellerId +"?page=products";
