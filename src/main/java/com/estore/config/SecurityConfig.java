@@ -23,9 +23,19 @@ public class SecurityConfig {
                                 .requestMatchers("/addProduct").authenticated()
                                 .anyRequest().permitAll())
                 .formLogin(
-                        (formLoginConfigurer) -> formLoginConfigurer.loginPage("/login").usernameParameter("email").passwordParameter("password").defaultSuccessUrl("/store", true).failureUrl("/login?error=true").permitAll())
+                        (formLoginConfigurer) -> formLoginConfigurer
+                                .loginPage("/login")
+                                .usernameParameter("email")
+                                .passwordParameter("password")
+                                .defaultSuccessUrl("/store", true)
+                                .failureUrl("/login?error=true")
+                                .permitAll())
                 .logout(
-                        (logoutConfigurer) -> logoutConfigurer.logoutUrl("/logout").logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("JSESSIONID").permitAll());
+                        (logoutConfigurer) -> logoutConfigurer.logoutUrl("/logout")
+                                .logoutSuccessUrl("/")
+                                .invalidateHttpSession(true)
+                                .deleteCookies("JSESSIONID")
+                                .permitAll());
         return httpSecurity.build();
     }
 

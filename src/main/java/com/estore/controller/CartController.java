@@ -9,6 +9,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import com.estore.repository.ProductRepository;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -142,62 +148,64 @@ public class CartController {
     }
 
     private void sendEmailToSeller(CartDTO cartDTO, HttpServletRequest request, Integer sellerId, Map<Integer, ArrayList<ProductEntity>> orderedProducts) throws MessagingException {
-        StringBuilder stringBuilder = new StringBuilder();
         double total = 0;
+        ArrayList<ProductEntity> orderedProductsOfThisSeller = orderedProducts.get(sellerId);
 
-        stringBuilder.append("<html><body><h1>You've received a new order:</h1><div><h2>Client information:</h2>");
-        stringBuilder.append("<span>Full name: ").append(cartDTO.getFullName()).append("</span><br>");
-        stringBuilder.append("<span>Phone number: ").append(cartDTO.getPhoneNumber()).append("</span><br>");
-        stringBuilder.append("<span>Email: ").append(cartDTO.getEmail()).append("</span><br>");
-        stringBuilder.append("<span>Shipping: ").append(cartDTO.getShipping()).append("</span><br>");
-        stringBuilder.append("<span>City: ").append(cartDTO.getCity()).append("</span><br>");
-        stringBuilder.append("<span>Payment: ").append(cartDTO.getPayment()).append("</span><br>");
-        stringBuilder.append("</div><div><h2>Order:</h2><table><tr><td>Name</td><td>Price</td><td>Amount</td></tr>");
-
-        ArrayList<ProductEntity> productsOfThisSeller = orderedProducts.get(sellerId);
-        for (ProductEntity thisProduct : productsOfThisSeller) {
+        ArrayList<String[]> productsToLetter = new ArrayList<>();
+        for (ProductEntity thisProduct : orderedProductsOfThisSeller) {
             int amount = Integer.parseInt(request.getParameter("amount" + thisProduct.getId()));
-
-            stringBuilder.append("<tr><td>").append(thisProduct.getName()).append("</td>");
-            stringBuilder.append("<td>").append(thisProduct.getPrice()).append("$</td>");
-            stringBuilder.append("<td>").append(amount).append("</td></tr>");
+            productsToLetter.add(new String[]{thisProduct.getName(), String.valueOf(thisProduct.getPrice()), String.valueOf(amount)});
 
             total += thisProduct.getPrice() * amount;
         }
 
-        stringBuilder.append("</table><h3>Total: ").append(total).append("$</h3></div></body></html>");
+        VelocityEngine velocityEngine = new VelocityEngine();
+        velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADERS, "classpath");
+        velocityEngine.setProperty("resource.loader.classpath.class", ClasspathResourceLoader.class.getName());
+        velocityEngine.init();
+        Template template = velocityEngine.getTemplate("templates/email/mailTemplate.vm");
 
-        emailService.sendEmail(sellerRepository.getEmailById(sellerId), "New order", stringBuilder.toString());
+        VelocityContext velocityContext = new VelocityContext();
+        velocityContext.put("headerText", "You've received a new order:");
+        velocityContext.put("clientInfo", cartDTO);
+        velocityContext.put("orderedProductsOfThisSeller", productsToLetter);
+        velocityContext.put("total", total);
+
+        StringWriter stringWriter = new StringWriter();
+        template.merge(velocityContext, stringWriter);
+
+        emailService.sendEmail(sellerRepository.getEmailById(sellerId), "New order", stringWriter.toString());
     }
 
     private void sendEmailToClient(CartDTO cartDTO, HttpServletRequest request, Integer[] mapKeySet, Map<Integer, ArrayList<ProductEntity>> orderedProducts) throws MessagingException {
-        StringBuilder stringBuilder = new StringBuilder();
         double total = 0;
-
-        stringBuilder.append("<html><body><h1>Your receipt:</h1><div><h2>Client information:</h2>");
-        stringBuilder.append("<span>Full name: ").append(cartDTO.getFullName()).append("</span><br>");
-        stringBuilder.append("<span>Phone number: ").append(cartDTO.getPhoneNumber()).append("</span><br>");
-        stringBuilder.append("<span>Email: ").append(cartDTO.getEmail()).append("</span><br>");
-        stringBuilder.append("<span>Shipping: ").append(cartDTO.getShipping()).append("</span><br>");
-        stringBuilder.append("<span>City: ").append(cartDTO.getCity()).append("</span><br>");
-        stringBuilder.append("<span>Payment: ").append(cartDTO.getPayment()).append("</span><br>");
-        stringBuilder.append("</div><div><h2>Order:</h2><table><tr><td>Name</td><td>Price</td><td>Amount</td></tr>");
+        ArrayList<String[]> productsToLetter = new ArrayList<>();
 
         for (Integer sellerId : mapKeySet) {
             ArrayList<ProductEntity> productsOfThisSeller = orderedProducts.get(sellerId);
             for (ProductEntity thisProduct : productsOfThisSeller) {
                 int amount = Integer.parseInt(request.getParameter("amount" + thisProduct.getId()));
-
-                stringBuilder.append("<tr><td>").append(thisProduct.getName()).append("</td>");
-                stringBuilder.append("<td>").append(thisProduct.getPrice()).append("$</td>");
-                stringBuilder.append("<td>").append(amount).append("</td></tr>");
+                productsToLetter.add(new String[]{thisProduct.getName(), String.valueOf(thisProduct.getPrice()), String.valueOf(amount)});
 
                 total += thisProduct.getPrice() * amount;
             }
         }
 
-        stringBuilder.append("</table><h3>Total: ").append(total).append("$</h3></div></body></html>");
+        VelocityEngine velocityEngine = new VelocityEngine();
+        velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADERS, "classpath");
+        velocityEngine.setProperty("resource.loader.classpath.class", ClasspathResourceLoader.class.getName());
+        velocityEngine.init();
+        Template template = velocityEngine.getTemplate("templates/email/mailTemplate.vm");
 
-        emailService.sendEmail(cartDTO.getEmail(), "Your receipt", stringBuilder.toString());
+        VelocityContext velocityContext = new VelocityContext();
+        velocityContext.put("headerText", "Your receipt:");
+        velocityContext.put("clientInfo", cartDTO);
+        velocityContext.put("orderedProductsOfThisSeller", productsToLetter);
+        velocityContext.put("total", total);
+
+        StringWriter stringWriter = new StringWriter();
+        template.merge(velocityContext, stringWriter);
+
+        emailService.sendEmail(cartDTO.getEmail(), "Your receipt", stringWriter.toString());
     }
 }
